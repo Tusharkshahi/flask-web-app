@@ -10,7 +10,7 @@ This is a simple flask web app for assessment purpose.
 
 ## Task Description
 
-The task assigned by Triluxo Technologies Private Limited involved the creation of a simple Flask or FastAPI application. The application should have a single endpoint that returns the message "Hello, Azure Web Apps!" when accessed. Additionally, the task included the creation of a Dockerfile to enable alternative deployment through Azure Container Registry and Azure Web App Service. Crucially, it was emphasized that secrets should not be hardcoded into the code for security and maintainability.
+The task assigned by Triluxo Technologies Private Limited involved the creation of a simple Flask or FastAPI application. The application should have a single endpoint that returns the message "Hello, Azure Web Apps!" when accessed.
 
 ## Project Components
 
@@ -24,6 +24,7 @@ The task assigned by Triluxo Technologies Private Limited involved the creation 
   - "Hello, Azure Web Apps!"
  
   Here the simple flask web app is running as per the given assessment :
+  
 
 
   
@@ -32,7 +33,9 @@ The task assigned by Triluxo Technologies Private Limited involved the creation 
 
 
 
+
 Dockerization (Optional)
+
 In addition to the specified task, I took the initiative to Dockerize the application. This was done to showcase the ability to containerize the application for consistent deployment across various environments.
 
 ### Dockerfile
@@ -76,4 +79,7 @@ In addition to the specified task, I took the initiative to Dockerize the applic
 - Refer to this readme for deployment and project information.
 
 Feel free to reach out for any clarifications or further assistance.
+
+
+
 <a href="https://www.linkedin.com/in/tusharkshahi/" target="_blank"><img height="32" width="32" src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/collection/build/ionicons/svg/logo-linkedin.svg" /></a> &nbsp;&nbsp;<a href="https://www.instagram.com/kshitij_dhyani/?hl=en" target="_blank"><img height="32" width="32" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/instagram.svg" /></a>
