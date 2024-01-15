@@ -1,0 +1,22 @@
+name: Deploy to App Service
+
+on:
+  workflow_run:
+    workflows: ["Push to ACR"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Azure Web App Deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ secrets.AZURE_APP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        images: '${{ secrets.ACR_REGISTRY }}/experiment:latest'
