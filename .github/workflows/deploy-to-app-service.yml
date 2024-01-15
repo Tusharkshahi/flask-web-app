@@ -1,4 +1,4 @@
-name: Deploy to Azure App Service
+name: Deploy to App Service
 
 on:
   push:
@@ -6,34 +6,22 @@ on:
       - main
 
 jobs:
-  deploy:
+  deploy-to-app-service:
     runs-on: ubuntu-latest
 
-    env:
-      AZURE_APP_NAME: ${{ secrets.AZURE_APP_NAME }}
-      AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-      ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
-      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
-
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Azure CLI
-      uses: azure/CLI@v1
+    - name: Login to Azure Container Registry
+      uses: azure/docker-login@v1
       with:
-        azcliversion: '2.56.0'
-
-    - name: Login to Azure
-      run: az login --service-principal -u ${{ secrets.AZURE_SP_CLIENT_ID }} -p ${{ secrets.AZURE_SP_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
-
-    - name: Build and push Docker image
-      run: |
-        docker build -t $ACR_REGISTRY/experiment:latest .
-        docker login -u $ACR_USERNAME -p $ACR_PASSWORD $ACR_REGISTRY
-        docker push $ACR_REGISTRY/experiment:latest
+        login-server: githubactionsexperiment.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Deploy to Azure App Service
-      run: |
-        az webapp config container set --name $AZURE_APP_NAME --resource-group $AZURE_RESOURCE_GROUP --docker-custom-image-name $ACR_REGISTRY/experiment:latest
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: actionsexperiment
+        images: 'githubactionsexperiment.azurecr.io/experiment:latest'
