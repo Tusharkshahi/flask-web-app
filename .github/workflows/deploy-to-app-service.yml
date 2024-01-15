@@ -1,23 +1,39 @@
-name: Deploy to App Service
+name: Deploy to Azure App Service
 
 on:
-  workflow_run:
-    workflows: ["Push to ACR"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      AZURE_APP_NAME: ${{ secrets.AZURE_APP_NAME }}
+      AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+      ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
+      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Azure Web App Deploy
-      uses: azure/webapps-deploy@v2
+    - name: Set up Azure CLI
+      uses: azure/CLI@v1
       with:
-        app-name: ${{ secrets.AZURE_APP_NAME }}
-        slot-name: ${{ secrets.AZURE_APP_SLOT }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        images: '${{ secrets.ACR_REGISTRY }}/experiment:latest'
+        azcliversion: '2.29.0'
+
+    - name: Login to Azure
+      run: az login --service-principal -u ${{ secrets.AZURE_SP_CLIENT_ID }} -p ${{ secrets.AZURE_SP_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t $ACR_REGISTRY/experiment:latest .
+        docker login -u $ACR_USERNAME -p $ACR_PASSWORD $ACR_REGISTRY
+        docker push $ACR_REGISTRY/experiment:latest
+
+    - name: Deploy to Azure App Service
+      run: |
+        az webapp config container set --name $AZURE_APP_NAME --resource-group $AZURE_RESOURCE_GROUP --docker-custom-image-name $ACR_REGISTRY/experiment:latest
