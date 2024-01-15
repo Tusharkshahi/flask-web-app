@@ -1,4 +1,4 @@
-name: Deploy to App Service
+name: Deploy container to App Service
 
 on:
   workflow_run:
