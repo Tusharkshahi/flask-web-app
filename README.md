@@ -6,11 +6,9 @@ This is a simple flask web app for assessment purpose.
 [![Think Big](https://img.shields.io/badge/Think-Big-orange.svg?style=for-the-badge)](https://vikramgithubio.sameerkapil7111999.now.sh/#vikram)
 [![Work Hard](https://img.shields.io/badge/Work-Hard-blue.svg?style=for-the-badge)](https://vikramgithubio.sameerkapil7111999.now.sh/#vikram)
 
-# Triluxo Technologies Task Readme
+# This is a simple flask application for setting up the CI/CD pipeline using github actions (Experiment )
 
-## Task Description
 
-The task assigned by Triluxo Technologies Private Limited involved the creation of a simple Flask or FastAPI application. The application should have a single endpoint that returns the message "Hello, Azure Web Apps!" when accessed.
 
 ## Project Components
 
@@ -34,9 +32,7 @@ The task assigned by Triluxo Technologies Private Limited involved the creation 
 
 
 
-Dockerization (Optional)
 
-In addition to the specified task, I took the initiative to Dockerize the application. This was done to showcase the ability to containerize the application for consistent deployment across various environments.
 
 ### Dockerfile
 
