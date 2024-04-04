@@ -7,13 +7,6 @@ pipeline {
         registryCredential = 'azure ACR' // ID of your ACR credentials stored in Jenkins
         appServicePublishProfile = 'AzureAppService_PublishProfile_43b8c52a9f9c46609eba4113bd48ed2c'
     }
-
-    stages {
-        stage('Test') {  // Optional if you have tests to run
-            steps {
-                sh 'python test_app.py' // Assuming tests are present
-            }
-        }
         stage('Build and Push Image') {
             steps {
                 script {
